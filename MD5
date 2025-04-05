@@ -1,6 +1,6 @@
-f2afc264c8635460f7c952ecf37c65fe *DESCRIPTION
+1203bd563fbb9a8977cfd73f2702b3c7 *DESCRIPTION
 eee3871d2b863247b50faaf25bb31b35 *NAMESPACE
-9caacf9e74d581d7a4a97993a43b0d96 *R/HTGM.R
+4414ca526324d7698006247c7980547d *R/HTGM.R
 b1108748602108d2bfbfef86b6cc2a24 *build/vignette.rds
 1687399ccb03f91491b9522bdbcd6e94 *data/Housekeeping_Genes.RData
 3150a0f74c7ca8522bc2ae7a769a10be *data/x_cn.RData
@@ -12,13 +12,13 @@ b4dd297d3cb6404a775c04c4a2be1223 *data/x_rnr.RData
 bb2cbb27466eb2801f44c550be131ce7 *data/x_svg.RData
 8478929b1e0bb3edee8bbd0239afeca8 *data/x_svgr.RData
 619fd1ab0145f9e3b34252181c75ef7e *inst/doc/HTGM.Rmd
-86810a53080e14b78ae3fe8c53be252c *inst/doc/HTGM.html
+a2f282e74fc74f68660f462c3366d47c *inst/doc/HTGM.html
 694c0dc73b19d27a243290a4212a90ba *inst/extdata/x_htgm.svg
 1f6695ff2cb2251dd4026630f7dbee74 *man/HTGM.Rd
 1a9f62141a933aa482a7c7c237527c34 *man/Housekeeping_Genes.Rd
 9cafa670f77ea6743376a4be49e0c7b9 *man/htgmM.Rd
 20723077e816e2d5574d3d238dcdb312 *man/hyperGenes.Rd
-29fe702b14a6d34ef04e0c99cec5b865 *man/hyperlinks.Rd
+ba75d4e0583ba804ac1e3a323d9a20e3 *man/hyperlinks.Rd
 0f12188ad6853db54aaf727321f17550 *man/pasteHyperlinks.Rd
 5047f71aa7a8575ea8ac557b03c5d675 *man/x_cn.Rd
 3838ed7c9d56bc1a4128975fa4476038 *man/x_cnc.Rd

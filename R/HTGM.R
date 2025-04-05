@@ -110,7 +110,10 @@ HTGM<-
 #' #load("data/x_cn.RData")
 #' #load("data/x_svg.RData")
 #' s<-system.file("extdata","x_htgm.svg",package="HTGM")
-#' hyperlinkedFileName<-hyperlinks(s,x_rn,x_cn)
+#' # need to avoid writing to "extdata"
+#' dir<-tempdir()
+#' file.copy(from=s, to=dir)
+#' hyperlinkedFileName<-hyperlinks(sprintf("%s/%s",dir,"x_htgm.svg"),x_rn,x_cn)
 #' print("hyperlinkedFileName")
 #' print(hyperlinkedFileName)
 #' 
