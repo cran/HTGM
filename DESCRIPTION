@@ -1,6 +1,6 @@
 Package: HTGM
-Version: 1.1
-Date: 2025-04-04
+Version: 1.2
+Date: 2025-05-14
 Title: High Throughput 'GoMiner'
 Authors@R: c(
           person("Barry", "Zeeberg", email = "barryz2013@gmail.com",
@@ -8,7 +8,7 @@ Authors@R: c(
 Maintainer: Barry Zeeberg <barryz2013@gmail.com>
 Author: Barry Zeeberg [aut, cre]
 Depends: R (>= 4.2.0)
-Imports: minimalistGODB, GoMiner, grDevices, stats, gplots
+Imports: minimalistGODB, GoMiner, grDevices, stats, gplots, vprint
 LazyData: true
 LazyDataCompression: xz
 Description: Two papers published in the early 2000's (Zeeberg, B.R., Feng, W., Wang, G. et al. 
@@ -34,6 +34,6 @@ Suggests: knitr, rmarkdown, testthat (>= 3.0.0)
 RoxygenNote: 7.3.2
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2025-04-04 19:12:55 UTC; barryzeeberg
+Packaged: 2025-05-14 16:30:03 UTC; barryzeeberg
 Repository: CRAN
-Date/Publication: 2025-04-05 11:20:27 UTC
+Date/Publication: 2025-05-14 17:00:02 UTC

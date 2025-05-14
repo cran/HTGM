@@ -14,7 +14,10 @@ HTGM(
   countThresh = 5,
   fdrThresh = 0.1,
   nrand = 100,
-  verbose = TRUE
+  mn = 2,
+  mx = 200,
+  opt = 0,
+  verbose = 1
 )
 }
 \arguments{
@@ -36,7 +39,13 @@ HTGM(
 
 \item{nrand}{integer number of randomizations passed to GoMiner}
 
-\item{verbose}{Boolean if TRUE, GoMiner will message some helpful diagnostics}
+\item{mn}{integer param passed to trimGOGOA3, min size threshold for a category}
+
+\item{mx}{integer param passed to trimGOGOA3, max size threshold for a category}
+
+\item{opt}{integer 0:1 parameter used to select randomization method}
+
+\item{verbose}{integer parameter passed to vprint()}
 }
 \value{
 returns the matrix of significant categories versus study
@@ -47,17 +56,15 @@ in a categories versus study hyperlinked heatmap
 }
 \examples{
 \dontrun{
-# this example takes too long to run, and
 # GOGOA3.RData is too large to include in the R package
 # so I need to load it from a file that is not in the package.
 # Since this is in a file in my own file system, I could not
 # include this as a regular example in the package.
-# This example is given in full detail in the package vignette.
-# You can generate GOGOA3.RData using the package 'minimalistGODB'
-# or you can retrieve it from https://github.com/barryzee/GO
+# you can generate it using the package 'minimalistGODB'
+# or you can retrieve it from https://github.com/barryzee/GO/tree/main/databases
+load("/Users/barryzeeberg/personal/GODB_RDATA/goa_human/GOGOA3_goa_human.RData")
 
 # load("data/Housekeeping_Genes.RData")
-# load("~/GODB_RDATA/GOGOA3.RData")
 sampleList<-unique(as.matrix(Housekeeping_Genes[,"Gene.name"]))
 n<-nrow(sampleList)
 sampleLists<-list()
@@ -71,7 +78,7 @@ sampleLists[["4"]]<-sampleList[sample(n,n/2)]
 sampleLists[["5"]]<-sampleList[sample(n,n/2)]
 sampleLists[["ALL"]]<-sampleList
 m<-HTGM(title=NULL,dir=tempdir(),sampleLists,GOGOA3,ONT="biological_process",
- enrichThresh=2,countThresh=5,fdrThresh=0.10,nrand=100,verbose=TRUE)
+ enrichThresh=2,countThresh=5,fdrThresh=0.10,nrand=100)
 }
 
 }

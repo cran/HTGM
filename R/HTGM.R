@@ -5,6 +5,7 @@
 #' @import grDevices
 #' @import stats
 #' @importFrom gplots heatmap.2
+#' @import vprint
 #'
 #' @description driver to invoke GoMiner for multiple studies, and integrate the results
 #'  in a categories versus study hyperlinked heatmap
@@ -18,21 +19,22 @@
 #' @param countThresh numerical acceptance threshold for gene count passed to GoMiner
 #' @param fdrThresh numerical acceptance threshold for fdr passed to GoMiner
 #' @param nrand integer number of randomizations passed to GoMiner
-#' @param verbose Boolean if TRUE, GoMiner will message some helpful diagnostics
+#' @param mn integer param passed to trimGOGOA3, min size threshold for a category
+#' @param mx integer param passed to trimGOGOA3, max size threshold for a category
+#' @param opt integer 0:1 parameter used to select randomization method
+#' @param verbose integer parameter passed to vprint()
 #'
 #' @examples
 #' \dontrun{
-#' # this example takes too long to run, and
 #' # GOGOA3.RData is too large to include in the R package
 #' # so I need to load it from a file that is not in the package.
 #' # Since this is in a file in my own file system, I could not
 #' # include this as a regular example in the package.
-#' # This example is given in full detail in the package vignette.
-#' # You can generate GOGOA3.RData using the package 'minimalistGODB'
-#' # or you can retrieve it from https://github.com/barryzee/GO
+#' # you can generate it using the package 'minimalistGODB'
+#' # or you can retrieve it from https://github.com/barryzee/GO/tree/main/databases
+#' load("/Users/barryzeeberg/personal/GODB_RDATA/goa_human/GOGOA3_goa_human.RData")
 #' 
 #' # load("data/Housekeeping_Genes.RData")
-#' # load("~/GODB_RDATA/GOGOA3.RData")
 #' sampleList<-unique(as.matrix(Housekeeping_Genes[,"Gene.name"]))
 #' n<-nrow(sampleList)
 #' sampleLists<-list()
@@ -46,7 +48,7 @@
 #' sampleLists[["5"]]<-sampleList[sample(n,n/2)]
 #' sampleLists[["ALL"]]<-sampleList
 #' m<-HTGM(title=NULL,dir=tempdir(),sampleLists,GOGOA3,ONT="biological_process",
-#'  enrichThresh=2,countThresh=5,fdrThresh=0.10,nrand=100,verbose=TRUE)
+#'  enrichThresh=2,countThresh=5,fdrThresh=0.10,nrand=100)
 #' }
 #' 
 #' @return returns the matrix of significant categories versus study
@@ -54,7 +56,7 @@
 #' @export
 HTGM<-
   function(title=NULL,dir=tempdir(),sampleLists,GOGOA3,ONT,enrichThresh=2,countThresh=5,
-           fdrThresh=0.10,nrand=100,verbose=TRUE) {
+           fdrThresh=0.10,nrand=100,mn=2,mx=200,opt=0,verbose=1) {
     stamp<-gsub(":","_",format(Sys.time(), "%a_%b_%d_%Y_%X"))
     if(is.null(title))
       title<-"HTGMresults"
@@ -67,8 +69,10 @@ HTGM<-
     else
       class<-"message"
     for(id in names(sampleLists))
+      #l[[id]]<-suppressMessages(GoMiner(title=id,subd,sampleLists[[id]],GOGOA3,
+       # ONT,enrichThresh,countThresh,fdrThresh,nrand),classes=class)
       l[[id]]<-suppressMessages(GoMiner(title=id,subd,sampleLists[[id]],GOGOA3,
-        ONT,enrichThresh,countThresh,fdrThresh,nrand),classes=class)
+        ONT,enrichThresh,countThresh,fdrThresh,nrand,mn,mx,opt,verbose),classes=class)
     
     #x_l<-l
     #save(x_l,file="data/x_l.RData")
@@ -79,11 +83,15 @@ HTGM<-
     hyperGenes(l,subd)
     
     file<-sprintf("%s/htgm.svg",subd)
-    svgWidth<-(0.375+0.025517241*ncol(m)) * 1.059602649
-    svgHeight<-(8.0 + 0.5*nrow(m)) * 0.526
+    #svgWidth<-(0.375+0.025517241*ncol(m)) * 1.059602649
+    #svgHeight<-(8.0 + 0.5*nrow(m)) * 0.526
+    
+    svgWidth<-(0.375+0.025517241*ncol(m)) * 1.059602649 * 4
+    svgHeight<-(8.0 + 0.5*nrow(m)) * 0.526 * 4
 
     svg(filename=file,width=svgWidth,height=svgHeight*1.5)
     # trick - use row for 'key' to get more space for long category names, but suppress key
+    
     hm<-heatmap.2(m,col = heat.colors(n=100,rev=FALSE),trace="none",lmat=rbind( c(0, 3),
         c(2,1), c(0,4) ),lhei=c(1,4,15),lwid=c(1,50),key=FALSE,margins = c(1, 10))
     
@@ -269,6 +277,6 @@ htgmM<-
       for(i in 1:nrow(thresh))
         m[id,thresh[i,"Row.names"]]<-thresh[i,"FDR"]
     }
-    
+ 
     return(m)
   }
